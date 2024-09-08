@@ -1,17 +1,14 @@
 import requests
 import json
 import pandas as pd
+from datetime import datetime
 
 
-def collect_data(API_KEY: str,
-                 created_date_from: str,
-                 created_date_to: str,
-                 arrival_date_from: str,
-                 arrival_date_to: str):
-
+def collect_data_today(API_KEY: str):
+    today_date = datetime.now()
+    today_date_formatted = today_date.strftime("%d/%m/%Y")
     headers = {'x-api-key': API_KEY}
-    created = {'from': created_date_from, 'to': created_date_to}
-    arrival = {'from': arrival_date_from, 'to': arrival_date_to}
+    created = {'from': today_date_formatted, 'to': today_date_formatted}
     all_reservations = []
     limit = 64
     offset = 0
@@ -19,7 +16,7 @@ def collect_data(API_KEY: str,
 
     while has_more_reservations:
         pager = {'limit': limit, 'offset': offset}
-        data = {'created': created, 'arrival': arrival, 'pager': pager}
+        data = {'created': created, 'pager': pager}
         data = {'filters': json.dumps(data)}
         
         response = requests.post(
@@ -72,4 +69,3 @@ def collect_data(API_KEY: str,
 
     df = pd.DataFrame(reservations_data)
     return df
-
