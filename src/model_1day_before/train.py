@@ -4,7 +4,7 @@ import os
 import logging
 import numpy as np
 from sklearn.ensemble import RandomForestRegressor
-
+import joblib
 
 logging.basicConfig(level=logging.INFO)
 
@@ -47,25 +47,20 @@ def drop_columns(df_train, df_test) -> pd.DataFrame:
 def train_model(
         train: pd.DataFrame,
         test: pd.DataFrame) -> RandomForestRegressor:
-    # i want a to do a random forest regression model
     from sklearn.ensemble import RandomForestRegressor
     from sklearn.metrics import mean_squared_error
 
-    # Definir las variables de entrada y salida
     X_train = train.drop(columns=['occupied_rooms'])
     y_train = train['occupied_rooms']
 
     X_test = test.drop(columns=['occupied_rooms'])
     y_test = test['occupied_rooms']
 
-    # Crear y entrenar el modelo
     model = RandomForestRegressor(n_estimators=50, random_state=42)
     model.fit(X_train, y_train)
 
-    # Predecir la ocupación para el conjunto de prueba
     y_pred = model.predict(X_test)
 
-    # Calcular el mae y mse
     mse = mean_squared_error(y_test, y_pred)
     mae = np.mean(np.abs(y_test - y_pred))
     logging.info(f"Mean Squared Error: {mse}, Mean Absolute Error: {mae}")
@@ -81,9 +76,10 @@ def build_train_1_day_before_model() -> pd.DataFrame:
     train, test = split_train_test(days_df)
     train, test = drop_columns(train, test)
     model = train_model(train, test)
+    joblib.dump(model, os.path.join(os.path.dirname(__file__),
+                                    settings.model_path))
+    pass
 
-    return model
 
 build_train_1_day_before_model()
-
 
