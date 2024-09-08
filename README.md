@@ -35,8 +35,7 @@ This project is part of my portfolio, showcasing a **machine learning pipeline**
   - `scikit-learn`
   - `pandas`
   - `numpy`
-  - `matplotlib`
-  - `seaborn`
+
 - **API**: WuBook Zak API
-- **Modeling**: Machine Learning (Random Forest, Gradient Boosting, etc.)
+- **Modeling**: Machine Learning 
 - **Environment Management**: Poetry
