@@ -4,3 +4,5 @@ __pycache__/
 DATA/
 .env
 poetry.lock
+notebook/
+models/model.plk
