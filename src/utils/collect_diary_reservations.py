@@ -4,7 +4,7 @@ import pandas as pd
 from datetime import datetime
 
 
-def collect_data_today(API_KEY: str):
+def collect_data(API_KEY: str):
     today_date = datetime.now()
     today_date_formatted = today_date.strftime("%d/%m/%Y")
     headers = {'x-api-key': API_KEY}

@@ -49,7 +49,9 @@ def fill_zero_with_neighbors(df):
                     break
             
             if prev_val is not None and next_val is not None:
-                df.loc[i, 'avg_price_per_room_filled'] = (prev_val + next_val) / 2
+                df.loc[i, 'avg_price_per_room_filled'] = (
+                    prev_val + next_val
+                ) / 2
 
             elif prev_val is not None:
                 df.loc[i, 'avg_price_per_room_filled'] = prev_val
